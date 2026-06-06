@@ -15,5 +15,13 @@ frontend/dist
 .DS_Store
 Thumbs.db
 
-#docs files
-docs/
+# Word files
+*.doc
+*.docx
+
+# Excel files
+*.xls
+*.xlsx
+
+# PDF files (optional)
+*.pdf
