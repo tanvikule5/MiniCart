@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import authRoutes from "./routes/auth.routes.js";
 
 dotenv.config();
 
@@ -10,7 +11,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Test route
+// Routes
+app.use("/api/auth", authRoutes);
+
+// Test Route
 app.get("/", (req, res) => {
   res.json({ message: "MiniCart Backend Running 🚀" });
 });
