@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
+import productRoutes from "./routes/product.routes.js";
 
 dotenv.config();
 
@@ -18,6 +19,9 @@ app.use("/api/auth", authRoutes);
 app.get("/", (req, res) => {
   res.json({ message: "MiniCart Backend Running 🚀" });
 });
+
+//product route
+app.use("/api/products", productRoutes);
 
 const PORT = process.env.PORT || 5000;
 
