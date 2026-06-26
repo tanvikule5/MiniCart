@@ -4,9 +4,10 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import categoryRoutes from "./routes/category.routes.js";
+import productImageRoutes from "./routes/productImage.routes.js";
+import favoriteRoutes from "./routes/favorite.routes.js";
 
 dotenv.config();
-
 const app = express();
 
 // Middlewares
@@ -27,8 +28,17 @@ app.use("/api/products", productRoutes);
 //category route
 app.use("/api/categories",categoryRoutes);
 
+//productimage route
+app.use("/api", productImageRoutes);
+
+
+//favorite route (register)
+app.use("/api/favorites", favoriteRoutes);
+
+//PORT
 const PORT = process.env.PORT || 5000;
 
+///start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
