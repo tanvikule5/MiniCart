@@ -1,3 +1,6 @@
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import prisma from "../config/prisma.js";
 export const registerUser = async (req, res) => {
 try {
 const {
@@ -8,6 +11,9 @@ phoneNumber,
 department,
 year
 } = req.body;
+
+const parsedYear = Number(year);
+console.log("BODY:", req.body);
 
 // Clean inputs
 const trimmedName = name?.trim();
@@ -70,7 +76,7 @@ if (!phoneRegex.test(phoneNumber)) {
 }
 
 // Year validation
-if (year < 1 || year > 5) {
+if (parsedYear < 1 || parsedYear > 5) {
   return res.status(400).json({
     success: false,
     message: "Invalid year"
@@ -106,7 +112,7 @@ const user =
       password: hashedPassword,
       phoneNumber,
       department,
-      year
+      year:parsedYear
     }
   });
 
@@ -130,10 +136,12 @@ return res.status(201).json({
 
 
 } catch (error) {
-return res.status(500).json({
-success: false,
-message: error.message
-});
+  console.error("REGISTER ERROR:", error);
+
+  return res.status(500).json({
+    success: false,
+    message: error.message
+  });
 }
 };
 
@@ -168,7 +176,7 @@ if (!emailRegex.test(trimmedEmail)) {
 
 // Find user
 const user = await prisma.user.findUnique({
-  where: { email }
+  where: { email: trimmedEmail }
 });
 
 if (!user) {

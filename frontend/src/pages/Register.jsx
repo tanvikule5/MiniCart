@@ -10,7 +10,7 @@ phoneNumber: "",
 department: "",
 year: ""
 });
-console.log(req.body);
+
 const handleChange = (e) => {
 setFormData({
 ...formData,
@@ -19,31 +19,30 @@ setFormData({
 };
 
 const handleSubmit = async (e) => {
-e.preventDefault();
+  e.preventDefault();
 
-try {
-  const response = await registerUser(formData);
+  try {
+    const response = await registerUser(formData);
 
-  console.log(response.data);
-  alert("Registration successful!");
+    console.log(response.data);
+    alert("Registration successful!");
 
-  setFormData({
-    name: "",
-    email: "",
-    password: "",
-    phoneNumber: "",
-    department: "",
-    year: ""
-  });
-} catch (error) {
-  console.log(error);
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      phoneNumber: "",
+      department: "",
+      year: ""
+    });
+  } catch (error) {
+    console.log(error.response?.data);
 
-  return res.status(500).json({
-    success: false,
-    message: error.message
-  });
-}
-
+    alert(
+      error.response?.data?.message ||
+      "Registration failed!"
+    );
+  }
 };
 
 return ( <div className="min-h-screen flex items-center justify-center bg-slate-50"> <form
