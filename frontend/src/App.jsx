@@ -8,6 +8,7 @@ import AddProduct from "./pages/AddProduct";
 import Favorites from "./pages/Favorites";
 import MyListings from "./pages/MyListings";
 import Profile from "./pages/Profile";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -17,10 +18,33 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/add-product" element={<AddProduct />} />
-        <Route path="/favorites" element={<Favorites />} />
         <Route path="/my-listings" element={<MyListings />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+  path="/favorites"
+  element={
+    <ProtectedRoute>
+      <Favorites />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/profile"
+  element={
+    <ProtectedRoute>
+      <Profile />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/add-product"
+  element={
+    <ProtectedRoute>
+      <AddProduct />
+    </ProtectedRoute>
+  }
+/>
       </Routes>
     </BrowserRouter>
   );
