@@ -29,6 +29,20 @@ export const createProduct = async (req, res) => {
       });
     }
 
+    //convert string values to numbers
+    const parsedSellingPrice = sellingPrice
+  ? parseFloat(sellingPrice)
+  : null;
+
+const parsedRentPrice = rentPrice
+  ? parseFloat(rentPrice)
+  : null;
+
+const parsedRentDuration = rentDuration
+  ? parseInt(rentDuration)
+  : null;
+
+
     const sellerId = req.user.userId;
 
     const product = await prisma.product.create({
@@ -38,9 +52,9 @@ export const createProduct = async (req, res) => {
         condition,
         status,
         type,
-        sellingPrice,
-        rentPrice,
-        rentDuration,
+        sellingPrice: parsedSellingPrice,
+        rentPrice: parsedRentPrice,
+        rentDuration: parsedRentDuration,
         sellerId,
         categoryId
       }
@@ -138,6 +152,8 @@ export const createProduct = async (req, res) => {
 //getMyProducts
 export const getMyProducts = async (req, res) => {
   try {
+
+  
 
     const sellerId = req.user.userId;
 

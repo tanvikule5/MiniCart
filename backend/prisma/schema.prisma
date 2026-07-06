@@ -42,10 +42,10 @@ model Product {
   status      String
   type        String
 
-  sellingPrice Float?
-  rentPrice    Float?
+   sellingPrice Float?
+  rentPrice Float?
   rentDuration Int?
-
+  
   sellerId   String
   categoryId String
 

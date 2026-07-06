@@ -30,15 +30,18 @@ export const createCategory = async (req, res) => {
     });
   }
 };
-//get all categories
+
+// Get all categories
 export const getAllCategories = async (req, res) => {
   try {
-
-    const categories = await prisma.category.findMany();
+    const categories = await prisma.category.findMany({
+      orderBy: {
+        name: "asc"
+      }
+    });
 
     return res.status(200).json({
       success: true,
-      count: categories.length,
       categories
     });
 
