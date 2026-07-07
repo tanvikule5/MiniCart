@@ -50,6 +50,14 @@ function Navbar() {
         ➕ Add Product
       </Link>
 
+
+      <Link
+  to="/my-listings"
+  className="border px-4 py-2 rounded-lg"
+>
+  📦 My Listings
+</Link>
+
       <Link
         to="/favorites"
         className="border px-4 py-2 rounded-lg"

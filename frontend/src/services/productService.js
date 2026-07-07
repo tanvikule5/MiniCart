@@ -9,7 +9,23 @@ export const createProduct = async (productData, token) => {
     }
   });
 };
-
+export const getProducts = () => {
+  return axios.get("http://localhost:5000/api/products");
+};
+export const getMyProducts = async (token) => {
+  return axios.get("http://localhost:5000/api/products/my/products", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+export const deleteProduct = async (id, token) => {
+  return axios.delete(`http://localhost:5000/api/products/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 /*Register.jsx
       ↓
 authService.js

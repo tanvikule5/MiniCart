@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import api from "../services/api";
+import { getProducts } from "../services/productService";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 
 function Home() {
 const [products, setProducts] = useState([]);
+///const [searchTerm, setSearchTerm] = useState("");
+
 
 const categories = [
 "Books",
@@ -15,17 +17,17 @@ const categories = [
 ];
 
 useEffect(() => {
-getProducts();
-}, []);
+  const fetchProducts = async () => {
+    try {
+      const response = await getProducts();
+      setProducts(response.data.products);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-const getProducts = async () => {
-try {
-const response = await api.get("/products");
-setProducts(response.data.products);
-} catch (error) {
-console.log(error);
-}
-};
+  fetchProducts();
+}, []);
 
 return ( <div className="min-h-screen bg-slate-50"> <Navbar />
 
@@ -45,22 +47,32 @@ return ( <div className="min-h-screen bg-slate-50"> <Navbar />
       ))}
     </div>
 
+      
+
+
     <h2 className="text-2xl font-bold mb-6">
       Latest Products
     </h2>
+{products.length === 0 ? (
+  <div className="text-center py-10">
+    <h3 className="text-xl font-semibold">
+      No products available.
+    </h3>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {products.map((product) => (
-        <ProductCard
-        key={product.id}
-        id={product.id}
-        title={product.title}
-        price={product.sellingPrice || product.rentPrice}
-        condition={product.condition}
-        image={product.images?.[0]?.imageUrl}
-        />
-      ))}
-    </div>
+    <p className="text-gray-500">
+      Be the first to add one!
+    </p>
+  </div>
+) : (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {products.map((product) => (
+      <ProductCard
+  key={product.id}
+  product={product}
+/>
+    ))}
+  </div>
+)}
   </div>
 </div>
 
