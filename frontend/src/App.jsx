@@ -9,6 +9,8 @@ import Favorites from "./pages/Favorites";
 import MyListings from "./pages/MyListings";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EditProduct from "./pages/EditProduct";
+
 
 function App() {
   return (
@@ -45,7 +47,16 @@ function App() {
     </ProtectedRoute>
   }
 />
-      </Routes>
+
+
+  <Route
+  path="/edit-product/:id"
+  element={
+    <ProtectedRoute>
+      <EditProduct />
+    </ProtectedRoute>
+  }
+/></Routes>
     </BrowserRouter>
   );
 }

@@ -26,6 +26,20 @@ export const deleteProduct = async (id, token) => {
     },
   });
 };
+export const getProductById = async (id) => {
+  return axios.get(`http://localhost:5000/api/products/${id}`);
+};
+export const updateProduct = async (id, productData, token) => {
+  return axios.put(
+    `http://localhost:5000/api/products/${id}`,
+    productData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
 /*Register.jsx
       ↓
 authService.js

@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function ProductCard({ product , isOwner,onDelete})  {
+  const navigate = useNavigate();
   return (
+    
      <Link to={`/product/${product.id}`}>
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg hover:scale-105 transition-all duration-300">
       <img
@@ -31,9 +33,16 @@ function ProductCard({ product , isOwner,onDelete})  {
 
         {isOwner ? (
   <div className="flex gap-2 mt-3">
-    <button className="flex-1 border rounded-lg px-3 py-2 text-blue-600">
-      ✏️ Edit
-    </button>
+    
+    <button
+  onClick={(e) => {
+    e.preventDefault();
+    navigate(`/edit-product/${product.id}`);
+  }}
+  className="flex-1 border rounded-lg px-3 py-2 text-blue-600"
+>
+  ✏️ Edit
+</button>
 <button
   onClick={(e) => {
     e.preventDefault();

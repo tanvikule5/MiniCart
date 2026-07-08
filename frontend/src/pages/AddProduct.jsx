@@ -3,6 +3,7 @@ import { useState } from "react";
 import { createProduct } from "../services/productService";
 import { useEffect } from "react";
 import { getCategories } from "../services/categoryService";
+import ProductForm from "../components/ProductForm";
 function AddProduct(){
   //useState
 const [formData, setFormData] = useState({
@@ -83,117 +84,14 @@ const handleSubmit = async (e) => {
 }
 };
 
-
-return(<div>
-  <form onSubmit={handleSubmit}>
-  <input
-  type="text"
-  name="title"
-  placeholder="Product Title"
-  value={formData.title}
-  onChange={handleChange}
-  className="w-full border p-3 rounded-lg"
-/>
-  
-  <textarea
-  name="description"
-  placeholder="Description"
-  value={formData.description}
-  onChange={handleChange}
-  className="w-full border p-3 rounded-lg"
-/>
-
-
-  <select
-  name="condition"
-  value={formData.condition}
-  onChange={handleChange}
-  className="w-full border p-3 rounded-lg"
->
-  <option value="">Select Condition</option>
-  <option value="New">New</option>
-  <option value="Used">Used</option>
-</select>
-
-    <select
-  name="status"
-  value={formData.status}
-  onChange={handleChange}
-  className="w-full border p-3 rounded-lg"
->
-  <option value="">Select Status</option>
-  <option value="Available">Available</option>
-  <option value="Sold">Sold</option>
-</select>
-
-
-  <select
-  name="type"
-  value={formData.type}
-  onChange={handleChange}
-  className="w-full border p-3 rounded-lg"
->
-  <option value="">Select Type</option>
-  <option value="Sell">Sell</option>
-  <option value="Rent">Rent</option>
-</select>
-
-
-  <input
-  type="number"
-  name="sellingPrice"
-  placeholder="Selling Price"
-  value={formData.sellingPrice}
-  onChange={handleChange}
-  className="w-full border p-3 rounded-lg"
-/>
-
-  <input
-  type="number"
-  name="rentPrice"
-  placeholder="Rent Price"
-  value={formData.rentPrice}
-  onChange={handleChange}
-  className="w-full border p-3 rounded-lg"
-/>
-
-
-  <input
-  type="number"
-  name="rentDuration"
-  placeholder="Rent Duration (Days)"
-  value={formData.rentDuration}
-  onChange={handleChange}
-  className="w-full border p-3 rounded-lg"
-/>
-
-  <select
-  name="categoryId"
-  value={formData.categoryId}
-  onChange={handleChange}
-  className="w-full border p-3 rounded-lg"
->
-  <option value="">Select Category</option>
-
-  {categories.map((category) => (
-    <option
-      key={category.id}
-      value={category.id}
-    >
-      {category.name}
-    </option>
-  ))}
-</select>
-
-  <button
-  type="submit"
-  className="w-full bg-indigo-600 text-white py-3 rounded-lg"
->
-  Add Product
-</button>
-
-</form>
-</div>
+return (
+  <ProductForm
+    formData={formData}
+    handleChange={handleChange}
+    handleSubmit={handleSubmit}
+    categories={categories}
+    buttonText="Add Product"
+  />
 );
 }
 export default AddProduct;
