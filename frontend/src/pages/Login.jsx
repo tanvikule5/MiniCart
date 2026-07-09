@@ -21,22 +21,24 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await loginUser(formData);
-
+      
+const response = await loginUser(formData);
       console.log(response.data);
+      
+      login( response.data.token, 
+response.data.user 
+); 
 
-      login(response.data.token);
-
-      alert("Login successful!");
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-      alert("Login failed!");
-    }
+alert("Login successful!"); 
+navigate("/"); 
+} catch (error) {
+   console.log(error);
+    alert("Login failed!");
+   } 
+  
   };
-
+    
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50">
       <form

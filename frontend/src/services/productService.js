@@ -1,13 +1,14 @@
 import axios from "axios";
-
+import api from "./api";
 const API = "http://localhost:5000/api/products/create";
 
 export const createProduct = async (productData, token) => {
   return axios.post(API, productData, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+  headers: {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "multipart/form-data",// fr img
+  },
+});
 };
 export const getProducts = () => {
   return axios.get("http://localhost:5000/api/products");
@@ -19,11 +20,11 @@ export const getMyProducts = async (token) => {
     },
   });
 };
-export const deleteProduct = async (id, token) => {
-  return axios.delete(`http://localhost:5000/api/products/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+export const deleteProduct = (id, token) => {
+  return api.delete(`/products/${id}`, {
+    headers:{
+      Authorization:`Bearer ${token}`
+    }
   });
 };
 export const getProductById = async (id) => {

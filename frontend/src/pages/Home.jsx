@@ -2,19 +2,14 @@ import { useEffect, useState } from "react";
 import { getProducts } from "../services/productService";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
+import { getCategories } from "../services/categoryService";
+import { useAuth } from "../context/AuthContext";
 
 function Home() {
 const [products, setProducts] = useState([]);
 ///const [searchTerm, setSearchTerm] = useState("");
-
-
-const categories = [
-"Books",
-"Notes",
-"Uniforms",
-"Electronics",
-"Others"
-];
+const [categories, setCategories] = useState([]);
+const { user } = useAuth();
 
 useEffect(() => {
   const fetchProducts = async () => {
@@ -29,6 +24,9 @@ useEffect(() => {
   fetchProducts();
 }, []);
 
+
+
+
 return ( <div className="min-h-screen bg-slate-50"> <Navbar />
 
   <div className="p-6">
@@ -37,14 +35,15 @@ return ( <div className="min-h-screen bg-slate-50"> <Navbar />
     </h2>
 
     <div className="flex flex-wrap gap-3 mb-10">
-      {categories.map((category) => (
-        <button
-          key={category}
-          className="bg-white border rounded-full px-5 py-2 shadow-sm"
-        >
-          {category}
-        </button>
-      ))}
+      
+     {categories.map((category) => (
+  <button
+    key={category.id}
+    className="bg-white border rounded-full px-5 py-2 shadow-sm"
+  >
+     {category.name}
+  </button>
+))}
     </div>
 
       
@@ -65,12 +64,17 @@ return ( <div className="min-h-screen bg-slate-50"> <Navbar />
   </div>
 ) : (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {products.map((product) => (
-      <ProductCard
-  key={product.id}
-  product={product}
-/>
-    ))}
+    {products.map((product) => {
+  console.log("USER:", user, "PRODUCT SELLER:", product.sellerId);
+
+  return (
+    <ProductCard
+      key={product.id}
+      product={product}
+      isOwner={user?.id === product.sellerId}
+    />
+  );
+})}
   </div>
 )}
   </div>
@@ -81,3 +85,4 @@ return ( <div className="min-h-screen bg-slate-50"> <Navbar />
 }
 
 export default Home;
+

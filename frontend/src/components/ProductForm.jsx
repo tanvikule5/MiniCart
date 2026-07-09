@@ -4,6 +4,9 @@ function ProductForm({
   handleSubmit,
   categories,
   buttonText,
+  image,
+  preview,
+  handleImageChange,
 }) {
   return (
     <div className="min-h-screen bg-slate-100 py-10 px-4">
@@ -26,7 +29,7 @@ function ProductForm({
           </div>
 
           {/* Basic Information */}
-          <section className="border border-slate-200 rounded-2xl p-6">
+          <section className="border border-slate-200 rounded-2xl p-6 mb-8">
             <h2 className="text-xl font-semibold mb-6">
               📝 Basic Information
             </h2>
@@ -65,75 +68,84 @@ function ProductForm({
           </section>
 
           {/* Pricing */}
-          <section className="border border-slate-200 rounded-2xl p-6">
+          <section className="border border-slate-200 rounded-2xl p-6 mb-8">
             <h2 className="text-xl font-semibold mb-6">
               💰 Pricing
             </h2>
 
             <div className="grid md:grid-cols-2 gap-5">
-              <div>
-                <label className="block font-medium mb-2">
-                  Product Type
-                </label>
+  <div>
+    <label className="block font-medium mb-2">
+      Product Type
+    </label>
 
-                <select
-                  name="type"
-                  value={formData.type}
-                  onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3"
-                >
-                  <option value="">Select Type</option>
-                  <option value="Sell">Sell</option>
-                  <option value="Rent">Rent</option>
-                </select>
-              </div>
+    <select
+      name="type"
+      value={formData.type}
+      onChange={handleChange}
+      className="w-full rounded-xl border border-slate-300 px-4 py-3"
+    >
+      <option value="">Select Type</option>
+      <option value="Sell">Sell</option>
+      <option value="Rent">Rent</option>
+    </select>
+  </div>
 
-              <div>
-                <label className="block font-medium mb-2">
-                  Selling Price
-                </label>
+  {formData.type === "Sell" && (
+    <div>
+      <label className="block font-medium mb-2">
+        Selling Price (₹)
+      </label>
 
-                <input
-                  type="number"
-                  name="sellingPrice"
-                  value={formData.sellingPrice}
-                  onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3"
-                />
-              </div>
+      <input
+        type="number"
+        name="sellingPrice"
+        value={formData.sellingPrice}
+        onChange={handleChange}
+        placeholder="Enter selling price"
+        className="w-full rounded-xl border border-slate-300 px-4 py-3"
+      />
+    </div>
+  )}
 
-              <div>
-                <label className="block font-medium mb-2">
-                  Rent Price
-                </label>
+  {formData.type === "Rent" && (
+    <>
+      <div>
+        <label className="block font-medium mb-2">
+          Rent Price (₹)
+        </label>
 
-                <input
-                  type="number"
-                  name="rentPrice"
-                  value={formData.rentPrice}
-                  onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3"
-                />
-              </div>
+        <input
+          type="number"
+          name="rentPrice"
+          value={formData.rentPrice}
+          onChange={handleChange}
+          placeholder="Price per rental"
+          className="w-full rounded-xl border border-slate-300 px-4 py-3"
+        />
+      </div>
 
-              <div>
-                <label className="block font-medium mb-2">
-                  Rent Duration (Days)
-                </label>
+      <div>
+        <label className="block font-medium mb-2">
+          Rent Duration (Days)
+        </label>
 
-                <input
-                  type="number"
-                  name="rentDuration"
-                  value={formData.rentDuration}
-                  onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3"
-                />
-              </div>
-            </div>
-          </section>
+        <input
+          type="number"
+          name="rentDuration"
+          value={formData.rentDuration}
+          onChange={handleChange}
+          placeholder="e.g. 7"
+          className="w-full rounded-xl border border-slate-300 px-4 py-3"
+        />
+      </div>
+    </>
+  )}
+</div>
+</section>
 
           {/* Product Details */}
-          <section className="border border-slate-200 rounded-2xl p-6">
+          <section className="border border-slate-200 rounded-2xl p-6 mb-8">
             <h2 className="text-xl font-semibold mb-6">
               📦 Product Details
             </h2>
@@ -199,6 +211,43 @@ function ProductForm({
             </div>
           </section>
 
+          {/* Product Image */}
+<section className="border border-slate-200 rounded-2xl p-6 mb-8">
+  <h2 className="text-xl font-semibold mb-6">
+    📷 Product Image
+  </h2>
+
+  <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-slate-300 rounded-2xl cursor-pointer hover:border-indigo-500 hover:bg-slate-50 transition">
+
+    {preview ? (
+      <img
+        src={preview}
+        alt="Preview"
+        className="w-full h-full object-cover rounded-2xl"
+      />
+    ) : (
+      <>
+        <span className="text-5xl">📷</span>
+
+        <p className="font-semibold mt-3">
+          Click to upload image
+        </p>
+
+        <p className="text-sm text-slate-500">
+          PNG, JPG or JPEG
+        </p>
+      </>
+    )}
+
+    <input
+      type="file"
+      accept="image/*"
+      onChange={handleImageChange}
+      className="hidden"
+    />
+  </label>
+</section>
+
           <button
             type="submit"
             className="w-full bg-indigo-600 hover:bg-indigo-700 transition text-white py-4 rounded-2xl font-semibold text-lg"
@@ -208,7 +257,7 @@ function ProductForm({
         </form>
       </div>
     </div>
-  );
+  
+);
 }
-
 export default ProductForm;

@@ -5,6 +5,8 @@ function Navbar() {
   const { isAuthenticated, logout } =
     useContext(AuthContext);
 
+    console.log("Navbar Auth:", isAuthenticated);
+
   const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -25,7 +27,9 @@ function Navbar() {
       />
 
       <div className="flex gap-4 items-center">
-        {!isAuthenticated ? (
+
+
+{!isAuthenticated ? (
     <>
       <Link
         to="/login"
@@ -58,12 +62,12 @@ function Navbar() {
   📦 My Listings
 </Link>
 
-      <Link
-        to="/favorites"
-        className="border px-4 py-2 rounded-lg"
-      >
-        ❤️
-      </Link>
+    <Link
+  to="/favorites"
+  className="border px-4 py-2 rounded-lg"
+>
+  ❤️
+</Link>
 
       <Link
         to="/profile"

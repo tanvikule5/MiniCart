@@ -1,4 +1,10 @@
 import prisma from "../config/prisma.js";
+import upload from "../middleware/upload.middleware.js";
+import cloudinary from "../config/cloudinary.js";
+import streamifier from "streamifier";
+import uploadToCloudinary from "../utils/uploadToCloudinary.js";
+
+
 //create product
 export const createProduct = async (req, res) => {
   try {
@@ -44,21 +50,32 @@ const parsedRentDuration = rentDuration
 
 
     const sellerId = req.user.userId;
+const product = await prisma.product.create({
+  data: {
+    title,
+    description,
+    condition,
+    status,
+    type,
+    sellingPrice: parsedSellingPrice,
+    rentPrice: parsedRentPrice,
+    rentDuration: parsedRentDuration,
+    sellerId,
+    categoryId,
+  },
+});
 
-    const product = await prisma.product.create({
-      data: {
-        title,
-        description,
-        condition,
-        status,
-        type,
-        sellingPrice: parsedSellingPrice,
-        rentPrice: parsedRentPrice,
-        rentDuration: parsedRentDuration,
-        sellerId,
-        categoryId
-      }
-    });
+if (req.file) {
+  const result = await uploadToCloudinary(req.file.buffer);
+
+  await prisma.productImage.create({
+    data: {
+      imageUrl: result.secure_url,
+      publicId: result.public_id,
+      productId: product.id,
+    },
+  });
+}
 
     return res.status(201).json({
       success: true,
@@ -77,21 +94,24 @@ const parsedRentDuration = rentDuration
   export const getAllProducts = async (req, res) => {
   try {
     const products = await prisma.product.findMany({
-      include: {
-  seller: {
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      phoneNumber: true,
-      department: true,
-      year: true,
-      profileImage: true
-    }
-  },
-  category: true
-}
-    });
+  include: {
+    images: true,
+
+    seller: {
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phoneNumber: true,
+        department: true,
+        year: true,
+        profileImage: true
+      }
+    },
+
+    category: true
+  }
+});
 
     return res.status(200).json({
       success: true,
@@ -115,6 +135,7 @@ const parsedRentDuration = rentDuration
     const product = await prisma.product.findUnique({
       where: { id },
       include: {
+        images: true,
         seller: {
           select: {
             id: true,
@@ -124,6 +145,7 @@ const parsedRentDuration = rentDuration
             department: true,
             year: true,
             profileImage: true
+            
           }
         },
         category: true
@@ -162,8 +184,9 @@ export const getMyProducts = async (req, res) => {
         sellerId
       },
       include: {
-        category: true
-      }
+  category: true,
+  images: true,
+}
     });
 
     return res.status(200).json({
@@ -225,6 +248,7 @@ export const updateProduct = async (req, res) => {
     });
   }
 };
+
 //delete product
 export const deleteProduct = async (req, res) => {
   try {
@@ -232,13 +256,13 @@ export const deleteProduct = async (req, res) => {
 
     // Find product
     const product = await prisma.product.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!product) {
       return res.status(404).json({
         success: false,
-        message: "Product not found"
+        message: "Product not found",
       });
     }
 
@@ -246,24 +270,40 @@ export const deleteProduct = async (req, res) => {
     if (product.sellerId !== req.user.userId) {
       return res.status(403).json({
         success: false,
-        message: "Unauthorized"
+        message: "Unauthorized",
       });
     }
 
-    // Delete product
+    // ✅ Delete related product images
+    await prisma.productImage.deleteMany({
+      where: {
+        productId: id,
+      },
+    });
+
+    // ✅ Delete related favorites
+    await prisma.favorite.deleteMany({
+      where: {
+        productId: id,
+      },
+    });
+
+    // ✅ Finally delete the product
     await prisma.product.delete({
-      where: { id }
+      where: { id },
     });
 
     return res.status(200).json({
       success: true,
-      message: "Product deleted successfully"
+      message: "Product deleted successfully",
     });
 
   } catch (error) {
+    console.log(error); // keep this for debugging
+
     return res.status(500).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   }
 };
