@@ -1,5 +1,11 @@
 import express from "express";
-import { createProduct,getAllProducts,  getProductById , getMyProducts, updateProduct, deleteProduct} from "../controllers/product.controller.js";
+import { 
+  createProduct,
+  getAllProducts,
+  getProductById,
+  getMyProducts,
+  deleteProduct
+} from "../controllers/product.controller.js";
 import authMiddleware from "../middleware/auth.middleware.js";
 import upload from "../middleware/upload.middleware.js";
 import protect from "../middleware/auth.middleware.js";
@@ -17,7 +23,7 @@ router.get("/",getAllProducts);
 // get products of logged-in user
 router.get("/my/products", authMiddleware, getMyProducts);
 //update product
-router.put("/:id", authMiddleware, updateProduct);
+//router.put("/:id", authMiddleware, updateProduct);
 //delete product
 router.delete("/:id", authMiddleware, deleteProduct);
 // get product by id

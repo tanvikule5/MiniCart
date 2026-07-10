@@ -205,46 +205,49 @@ export const getMyProducts = async (req, res) => {
   }
 };
 //update product
-export const updateProduct = async (req, res) => {
+export const updateProfile = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {
+      name,
+      phoneNumber,
+      department,
+      year,
+      collegeName,
+    } = req.body;
 
-    // Find product
-    const product = await prisma.product.findUnique({
-      where: { id }
-    });
+    let profileImage;
 
-    if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: "Product not found"
-      });
+    // Upload image to Cloudinary
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      profileImage = result.secure_url;
     }
 
-    // Check ownership
-    if (product.sellerId !== req.user.userId) {
-      return res.status(403).json({
-        success: false,
-        message: "Unauthorized"
-      });
-    }
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: req.user.userId,
+      },
+      data: {
+        name,
+        phoneNumber,
+        department,
+        year: Number(year),
+        collegeName,
 
-    // Update product
-    const updatedProduct = await prisma.product.update({
-      where: { id },
-      data: req.body
+        ...(profileImage && { profileImage }),
+      },
     });
 
     return res.status(200).json({
       success: true,
-      message: "Product updated successfully",
-      updatedProduct
+      message: "Profile updated successfully",
+      user: updatedUser,
     });
 
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   }
 };

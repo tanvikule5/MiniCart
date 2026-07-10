@@ -1,7 +1,11 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-function Navbar() {
+import { FiSearch } from "react-icons/fi";
+function Navbar({
+  searchTerm,
+  setSearchTerm,
+}) {
   const { isAuthenticated, logout } =
     useContext(AuthContext);
 
@@ -20,15 +24,22 @@ function Navbar() {
         MiniCart
       </h2>
 
-      <input
-        type="text"
-        placeholder="Search products..."
-        className="border rounded-lg px-4 py-2 w-full md:w-80"
-      />
+    <div className="relative w-full md:w-80">
+  <FiSearch
+    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+    size={18}
+  />
 
-      <div className="flex gap-4 items-center">
+  <input
+    type="text"
+    placeholder="Search products..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="w-full border rounded-xl pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+  />
+</div>
 
-
+<div className="flex gap-4 items-center">
 {!isAuthenticated ? (
     <>
       <Link

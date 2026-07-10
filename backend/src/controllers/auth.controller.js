@@ -1,6 +1,9 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import prisma from "../config/prisma.js";
+import uploadToCloudinary from "../utils/uploadToCloudinary.js";
+import cloudinary from "../config/cloudinary.js";
+
 export const registerUser = async (req, res) => {
 try {
 const {
@@ -229,4 +232,179 @@ success: false,
 message: error.message
 });
 }
+};
+
+//update profile
+export const updateProfile = async (req, res) => {
+  try {
+
+    const {
+      name,
+      phoneNumber,
+      department,
+      year,
+      collegeName,
+    } = req.body;
+    
+    console.log(req.file);
+console.log(req.body);
+
+    let profileImage;
+
+
+    if (req.file) {
+
+  const result = await uploadToCloudinary(req.file.buffer);
+
+  console.log("CLOUDINARY RESULT:", result);
+
+  profileImage = result.secure_url;
+
+  console.log("PROFILE IMAGE URL:", profileImage);
+}
+
+
+    const updatedUser = await prisma.user.update({
+
+      where:{
+        id:req.user.userId
+      },
+
+
+      data:{
+
+        name,
+        phoneNumber,
+        department,
+        year:Number(year),
+        collegeName,
+
+        ...(profileImage && {
+          profileImage
+        })
+
+      },
+
+
+
+      select:{
+        id:true,
+        name:true,
+        email:true,
+        phoneNumber:true,
+        department:true,
+        year:true,
+        collegeName:true,
+        profileImage:true,
+        createdAt:true
+      }
+
+    });
+
+console.log("UPDATED USER:", updatedUser);
+
+    res.status(200).json({
+
+      success:true,
+      message:"Profile updated successfully",
+      user:updatedUser
+
+    });
+
+
+  } catch(error){
+
+    res.status(500).json({
+
+      success:false,
+      message:error.message
+
+    });
+
+  }
+};
+export const removeProfileImage = async (req, res) => {
+
+  try {
+
+    const user = await prisma.user.findUnique({
+
+      where:{
+        id:req.user.userId
+      }
+
+    });
+
+
+    if(!user.profileImage){
+
+      return res.status(400).json({
+
+        success:false,
+        message:"No profile image found"
+
+      });
+
+    }
+
+
+    // Remove image from Cloudinary
+    const publicId = user.profileImage
+      .split("/")
+      .pop()
+      .split(".")[0];
+
+
+    await cloudinary.uploader.destroy(
+      publicId
+    );
+
+
+    // Remove URL from database
+    const updatedUser = await prisma.user.update({
+
+  where:{
+    id:req.user.userId
+  },
+
+  data:{
+    profileImage:null
+  },
+
+
+  select:{
+    id:true,
+    name:true,
+    email:true,
+    phoneNumber:true,
+    department:true,
+    year:true,
+    collegeName:true,
+    profileImage:true,
+    createdAt:true
+  }
+
+});
+
+
+    res.status(200).json({
+
+      success:true,
+      message:"Profile image removed",
+      user:updatedUser
+
+    });
+
+
+  } catch(error){
+
+    res.status(500).json({
+
+      success:false,
+      message:error.message
+
+    });
+
+  }
+
 };

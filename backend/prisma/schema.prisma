@@ -1,84 +1,70 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id           String   @id @default(uuid())
+  id           String     @id @default(uuid())
   name         String
-  email        String   @unique
+  email        String     @unique
   password     String
   phoneNumber  String
   department   String
   year         Int
   profileImage String?
-  createdAt    DateTime @default(now())
-
-  products  Product[]
-  favorites Favorite[]
+  createdAt    DateTime   @default(now())
+  collegeName  String?
+  favorites    Favorite[]
+  products     Product[]
 }
 
 model Category {
-  id        String   @id @default(uuid())
-  name      String   @unique
-  createdAt DateTime @default(now())
-
-  products Product[]
+  id        String    @id @default(uuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  products  Product[]
 }
 
 model Product {
-  id          String @id @default(uuid())
-  title       String
-  description String
-  condition   String
-  status      String
-  type        String
-
-   sellingPrice Float?
-  rentPrice Float?
+  id           String         @id @default(uuid())
+  title        String
+  description  String
+  condition    String
+  status       String
+  type         String
+  sellingPrice Float?
+  rentPrice    Float?
   rentDuration Int?
-  
-  sellerId   String
-  categoryId String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  seller   User     @relation(fields: [sellerId], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
-
-  images    ProductImage[]
-  favorites Favorite[]
+  sellerId     String
+  categoryId   String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  favorites    Favorite[]
+  category     Category       @relation(fields: [categoryId], references: [id])
+  seller       User           @relation(fields: [sellerId], references: [id])
+  images       ProductImage[]
 }
 
 model ProductImage {
-  id        String @id @default(uuid())
+  id        String   @id @default(uuid())
   imageUrl  String
-  publicId  String 
   productId String
-
   createdAt DateTime @default(now())
-
-  product Product @relation(fields: [productId], references: [id])
+  publicId  String
+  product   Product  @relation(fields: [productId], references: [id])
 }
 
 model Favorite {
-  id        String @id @default(uuid())
+  id        String   @id @default(uuid())
   userId    String
   productId String
-
   createdAt DateTime @default(now())
-
-  user    User    @relation(fields: [userId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, productId])
-} 
+}
