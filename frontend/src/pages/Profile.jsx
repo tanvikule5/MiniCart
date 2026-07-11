@@ -4,14 +4,18 @@ import {
   updateProfile,
   removeProfileImage,
 } from "../services/authService";
+import AccountSection from "../components/AccountSection";
+import SettingsDrawer from "../components/SettingsDrawer";
+import toast from "react-hot-toast";
 
 
 function Profile() {
-
+//state variables
   const [profileImage, setProfileImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const defaultImage =
 "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+const [activeDrawer, setActiveDrawer] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -87,12 +91,12 @@ const handleRemoveImage = async () => {
     setPreview(null);
     setProfileImage(null);
 
-    alert("Profile image removed");
+    toast.success("profile image updated successfully!");
 
   } catch(error) {
 
     console.log(error);
-    alert("Failed to remove image");
+    toast.error("Update failed");
 
   }
 };
@@ -156,19 +160,18 @@ setPreview(response.user.profileImage);
 
 setProfileImage(null);
 
-alert("Profile updated successfully!");
+toast.success("Profile updated successfully!");
 
 
     } catch(error){
 
       console.log(error);
 
-      alert("Update failed");
+      toast.error("Update failed");
 
     }
 
   };
-
 
 
   return (
@@ -369,8 +372,15 @@ Remove photo
 
 
 
-      </form>
-
+        <AccountSection
+        setActiveDrawer={setActiveDrawer}
+        />
+ </form>
+         <SettingsDrawer
+          activeDrawer={activeDrawer}
+          setActiveDrawer={setActiveDrawer}
+        />
+     
 
     </div>
 

@@ -44,5 +44,17 @@ export const updateProfile = async (formData, token) => {
   );
 };
 
- 
-
+export const changePassword = async (
+  passwordData,
+  token
+) => {
+  return api.put(
+    "/auth/change-password",
+    passwordData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};

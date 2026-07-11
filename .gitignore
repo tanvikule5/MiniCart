@@ -27,3 +27,5 @@ Thumbs.db
 *.pdf
 
 *.jpg
+
+node_modules/
