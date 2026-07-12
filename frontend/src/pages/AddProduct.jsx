@@ -4,7 +4,7 @@ import { createProduct } from "../services/productService";
 import { useEffect } from "react";
 import { getCategories } from "../services/categoryService";
 import ProductForm from "../components/ProductForm";
-
+import toast from "react-hot-toast";
 function AddProduct(){
   //useState
 const [formData, setFormData] = useState({
@@ -105,7 +105,7 @@ const response = await createProduct(
 
     console.log(response.data);
 
-    alert("Product added successfully!");
+    toast.success("Product added successfully!");
   } catch (error) {
   console.log(error);
 
@@ -113,7 +113,7 @@ const response = await createProduct(
 
   console.log(error.response?.data);
 
-  alert(error.response?.data?.message || "Failed to add product");
+  toast.error(error.response?.data?.message || "Failed to add product");
 }
 };
 

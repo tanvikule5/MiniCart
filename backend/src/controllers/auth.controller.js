@@ -479,3 +479,27 @@ export const removeProfileImage = async (req, res) => {
   }
 
 };
+//delete account
+
+export const deleteAccount = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    await prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Account deleted successfully",
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

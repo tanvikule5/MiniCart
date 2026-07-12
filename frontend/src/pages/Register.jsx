@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { registerUser } from "../services/authService";
+import toast from "react-hot-toast";
+
 
 function Register() {
 const [formData, setFormData] = useState({
@@ -25,7 +27,7 @@ const handleSubmit = async (e) => {
     const response = await registerUser(formData);
 
     console.log(response.data);
-    alert("Registration successful!");
+    toast.success("Registration successful!");
 
     setFormData({
       name: "",
@@ -38,7 +40,7 @@ const handleSubmit = async (e) => {
   } catch (error) {
     console.log(error.response?.data);
 
-    alert(
+    toast.error(
       error.response?.data?.message ||
       "Registration failed!"
     );

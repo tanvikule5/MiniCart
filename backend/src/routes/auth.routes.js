@@ -5,6 +5,7 @@ import {
   updateProfile,
   removeProfileImage,
   changePassword,
+  deleteAccount
  
 } from "../controllers/auth.controller.js";
 import prisma from "../config/prisma.js";
@@ -67,5 +68,9 @@ router.put(
   changePassword
 );
 
-
+router.delete(
+  "/delete-account",
+  authMiddleware,
+  deleteAccount
+);
 export default router;

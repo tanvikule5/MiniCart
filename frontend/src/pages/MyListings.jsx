@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
+import toast from "react-hot-toast";
+
 import {
   getMyProducts,
   deleteProduct
@@ -36,10 +38,10 @@ function MyListings() {
       prevProducts.filter((product) => product.id !== id)
     );
 
-    alert("Product deleted successfully!");
+    toast.success("Product deleted successfully!");
   } catch (error) {
     console.log(error);
-    alert("Failed to delete product");
+    toast.error("Failed to delete product");
   }
 };
   return (

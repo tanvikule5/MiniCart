@@ -7,7 +7,7 @@ import {
   getProductById,
   updateProduct,
 } from "../services/productService";
-
+import toast from "react-hot-toast";
 function EditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -90,13 +90,13 @@ function EditProduct() {
 
     await updateProduct(id, productData, token);
 
-    alert("Product updated successfully!");
+    toast.success("Product updated successfully!");
 
     navigate("/my-listings");
   } catch (error) {
     console.log(error);
 
-    alert(
+    toast.error(
       error.response?.data?.message ||
         "Failed to update product"
     );

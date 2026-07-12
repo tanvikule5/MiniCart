@@ -2,6 +2,8 @@ import { useState, useContext } from "react";
 import { loginUser } from "../services/authService";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+
+import toast from "react-hot-toast";
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -30,11 +32,11 @@ const response = await loginUser(formData);
 response.data.user 
 ); 
 
-alert("Login successful!"); 
+toast.success("Login successful!"); 
 navigate("/"); 
 } catch (error) {
    console.log(error);
-    alert("Login failed!");
+    toast.error("Login failed!");
    } 
   
   };

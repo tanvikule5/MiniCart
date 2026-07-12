@@ -58,3 +58,14 @@ export const changePassword = async (
     }
   );
 };
+
+export const deleteAccount = async (password, token) => {
+  return api.delete("/auth/delete-account", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      password,
+    },
+  });
+};

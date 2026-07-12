@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 import { getFavorites } from "../services/favoriteService";
 import { removeFavorite } from "../services/favoriteService";
-
+import toast from "react-hot-toast";
 function Favorites() {
   const [favorites, setFavorites] = useState([]);
 
@@ -35,11 +35,11 @@ const handleRemoveFavorite = async (productId) => {
       )
     );
 
-    alert("Removed from favorites ❤️");
+    toast.success("Removed from favorites ❤️");
   } catch (error) {
     console.log(error);
 
-    alert(
+    toast.error(
       error.response?.data?.message ||
       "Failed to remove favorite"
     );
