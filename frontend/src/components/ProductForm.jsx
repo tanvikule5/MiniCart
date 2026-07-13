@@ -9,34 +9,34 @@ function ProductForm({
   handleImageChange,
 }) {
   return (
-    <div className="min-h-screen bg-slate-100 py-10 px-4">
+    <div className="min-h-screen bg-slate-100 dark:bg-gray-900 py-10 px-4 transition-colors duration-300">
       <div className="max-w-2xl mx-auto">
         <form
           onSubmit={handleSubmit}
-          className="bg-white rounded-3xl shadow-xl p-8 border border-slate-200"
+          className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 border border-slate-200 dark:border-gray-700 transition-colors duration-300"
         >
           {/* Header */}
           <div>
-            <h1 className="text-4xl font-bold text-slate-800">
+            <h1 className="text-4xl font-bold text-slate-800 dark:text-white">
               {buttonText === "Update Product"
                 ? "Edit Product"
                 : "Create Product"}
             </h1>
 
-            <p className="text-slate-500 mt-2">
+            <p className="text-slate-500 dark:text-gray-400 mt-2">
               Add all the necessary details about your product.
             </p>
           </div>
 
           {/* Basic Information */}
-          <section className="border border-slate-200 rounded-2xl p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-6">
+          <section className="border border-slate-200 dark:border-gray-700 rounded-2xl p-6 mb-8">
+            <h2 className="text-xl font-semibold mb-6 dark:text-white">
               📝 Basic Information
             </h2>
 
             <div className="space-y-5">
               <div>
-                <label className="block font-medium mb-2">
+                <label className="block font-medium mb-2 dark:text-gray-200">
                   Product Title
                 </label>
 
@@ -46,12 +46,12 @@ function ProductForm({
                   value={formData.title}
                   onChange={handleChange}
                   placeholder="e.g. Java Programming Book"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500"
+                  className="w-full rounded-xl border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white px-4 py-3 outline-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500"
                 />
               </div>
 
               <div>
-                <label className="block font-medium mb-2">
+                <label className="block font-medium mb-2 dark:text-gray-200">
                   Description
                 </label>
 
@@ -61,98 +61,98 @@ function ProductForm({
                   value={formData.description}
                   onChange={handleChange}
                   placeholder="Describe your product..."
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none resize-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500"
+                  className="w-full rounded-xl border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white px-4 py-3 outline-none resize-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500"
                 />
               </div>
             </div>
           </section>
 
           {/* Pricing */}
-          <section className="border border-slate-200 rounded-2xl p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-6">
+          <section className="border border-slate-200 dark:border-gray-700 rounded-2xl p-6 mb-8">
+            <h2 className="text-xl font-semibold mb-6 dark:text-white">
               💰 Pricing
             </h2>
 
             <div className="grid md:grid-cols-2 gap-5">
-  <div>
-    <label className="block font-medium mb-2">
-      Product Type
-    </label>
+              <div>
+                <label className="block font-medium mb-2 dark:text-gray-200">
+                  Product Type
+                </label>
 
-    <select
-      name="type"
-      value={formData.type}
-      onChange={handleChange}
-      className="w-full rounded-xl border border-slate-300 px-4 py-3"
-    >
-      <option value="">Select Type</option>
-      <option value="Sell">Sell</option>
-      <option value="Rent">Rent</option>
-    </select>
-  </div>
+                <select
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white px-4 py-3"
+                >
+                  <option value="">Select Type</option>
+                  <option value="Sell">Sell</option>
+                  <option value="Rent">Rent</option>
+                </select>
+              </div>
 
-  {formData.type === "Sell" && (
-    <div>
-      <label className="block font-medium mb-2">
-        Selling Price (₹)
-      </label>
+              {formData.type === "Sell" && (
+                <div>
+                  <label className="block font-medium mb-2 dark:text-gray-200">
+                    Selling Price (₹)
+                  </label>
 
-      <input
-        type="number"
-        name="sellingPrice"
-        value={formData.sellingPrice}
-        onChange={handleChange}
-        placeholder="Enter selling price"
-        className="w-full rounded-xl border border-slate-300 px-4 py-3"
-      />
-    </div>
-  )}
+                  <input
+                    type="number"
+                    name="sellingPrice"
+                    value={formData.sellingPrice}
+                    onChange={handleChange}
+                    placeholder="Enter selling price"
+                    className="w-full rounded-xl border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white px-4 py-3"
+                  />
+                </div>
+              )}
 
-  {formData.type === "Rent" && (
-    <>
-      <div>
-        <label className="block font-medium mb-2">
-          Rent Price (₹)
-        </label>
+              {formData.type === "Rent" && (
+                <>
+                  <div>
+                    <label className="block font-medium mb-2 dark:text-gray-200">
+                      Rent Price (₹)
+                    </label>
 
-        <input
-          type="number"
-          name="rentPrice"
-          value={formData.rentPrice}
-          onChange={handleChange}
-          placeholder="Price per rental"
-          className="w-full rounded-xl border border-slate-300 px-4 py-3"
-        />
-      </div>
+                    <input
+                      type="number"
+                      name="rentPrice"
+                      value={formData.rentPrice}
+                      onChange={handleChange}
+                      placeholder="Price per rental"
+                      className="w-full rounded-xl border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white px-4 py-3"
+                    />
+                  </div>
 
-      <div>
-        <label className="block font-medium mb-2">
-          Rent Duration (Days)
-        </label>
+                  <div>
+                    <label className="block font-medium mb-2 dark:text-gray-200">
+                      Rent Duration (Days)
+                    </label>
 
-        <input
-          type="number"
-          name="rentDuration"
-          value={formData.rentDuration}
-          onChange={handleChange}
-          placeholder="e.g. 7"
-          className="w-full rounded-xl border border-slate-300 px-4 py-3"
-        />
-      </div>
-    </>
-  )}
-</div>
-</section>
+                    <input
+                      type="number"
+                      name="rentDuration"
+                      value={formData.rentDuration}
+                      onChange={handleChange}
+                      placeholder="e.g. 7"
+                      className="w-full rounded-xl border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white px-4 py-3"
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+          </section>
 
           {/* Product Details */}
-          <section className="border border-slate-200 rounded-2xl p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-6">
+          <section className="border border-slate-200 dark:border-gray-700 rounded-2xl p-6 mb-8">
+            <h2 className="text-xl font-semibold mb-6 dark:text-white">
               📦 Product Details
             </h2>
 
             <div className="grid md:grid-cols-3 gap-5">
               <div>
-                <label className="block font-medium mb-2">
+                <label className="block font-medium mb-2 dark:text-gray-200">
                   Category
                 </label>
 
@@ -160,15 +160,12 @@ function ProductForm({
                   name="categoryId"
                   value={formData.categoryId}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3"
+                  className="w-full rounded-xl border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white px-4 py-3"
                 >
                   <option value="">Select Category</option>
 
                   {categories.map((category) => (
-                    <option
-                      key={category.id}
-                      value={category.id}
-                    >
+                    <option key={category.id} value={category.id}>
                       {category.name}
                     </option>
                   ))}
@@ -176,7 +173,7 @@ function ProductForm({
               </div>
 
               <div>
-                <label className="block font-medium mb-2">
+                <label className="block font-medium mb-2 dark:text-gray-200">
                   Condition
                 </label>
 
@@ -184,7 +181,7 @@ function ProductForm({
                   name="condition"
                   value={formData.condition}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3"
+                  className="w-full rounded-xl border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white px-4 py-3"
                 >
                   <option value="">Select Condition</option>
                   <option value="New">New</option>
@@ -193,7 +190,7 @@ function ProductForm({
               </div>
 
               <div>
-                <label className="block font-medium mb-2">
+                <label className="block font-medium mb-2 dark:text-gray-200">
                   Status
                 </label>
 
@@ -201,7 +198,7 @@ function ProductForm({
                   name="status"
                   value={formData.status}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3"
+                  className="w-full rounded-xl border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-black dark:text-white px-4 py-3"
                 >
                   <option value="">Select Status</option>
                   <option value="Available">Available</option>
@@ -212,41 +209,40 @@ function ProductForm({
           </section>
 
           {/* Product Image */}
-<section className="border border-slate-200 rounded-2xl p-6 mb-8">
-  <h2 className="text-xl font-semibold mb-6">
-    📷 Product Image
-  </h2>
+          <section className="border border-slate-200 dark:border-gray-700 rounded-2xl p-6 mb-8">
+            <h2 className="text-xl font-semibold mb-6 dark:text-white">
+              📷 Product Image
+            </h2>
 
-  <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-slate-300 rounded-2xl cursor-pointer hover:border-indigo-500 hover:bg-slate-50 transition">
+            <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-slate-300 dark:border-gray-600 rounded-2xl cursor-pointer hover:border-indigo-500 hover:bg-slate-50 dark:hover:bg-gray-700 transition">
+              {preview ? (
+                <img
+                  src={preview}
+                  alt="Preview"
+                  className="w-full h-full object-cover rounded-2xl"
+                />
+              ) : (
+                <>
+                  <span className="text-5xl">📷</span>
 
-    {preview ? (
-      <img
-        src={preview}
-        alt="Preview"
-        className="w-full h-full object-cover rounded-2xl"
-      />
-    ) : (
-      <>
-        <span className="text-5xl">📷</span>
+                  <p className="font-semibold mt-3 dark:text-white">
+                    Click to upload image
+                  </p>
 
-        <p className="font-semibold mt-3">
-          Click to upload image
-        </p>
+                  <p className="text-sm text-slate-500 dark:text-gray-400">
+                    PNG, JPG or JPEG
+                  </p>
+                </>
+              )}
 
-        <p className="text-sm text-slate-500">
-          PNG, JPG or JPEG
-        </p>
-      </>
-    )}
-
-    <input
-      type="file"
-      accept="image/*"
-      onChange={handleImageChange}
-      className="hidden"
-    />
-  </label>
-</section>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+            </label>
+          </section>
 
           <button
             type="submit"
@@ -257,7 +253,7 @@ function ProductForm({
         </form>
       </div>
     </div>
-  
-);
+  );
 }
+
 export default ProductForm;

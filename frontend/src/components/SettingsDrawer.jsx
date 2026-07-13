@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { deleteAccount } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
+import { useTheme } from "../context/ThemeContext";
 
 function SettingsDrawer({
   activeDrawer,
@@ -15,13 +15,14 @@ const [currentPassword, setCurrentPassword] = useState("");
 const [newPassword, setNewPassword] = useState("");
 const [confirmPassword, setConfirmPassword] = useState("");
 const [deletePassword, setDeletePassword] = useState("");
-const [theme, setTheme] = useState("light");
+
 
 
 const navigate = useNavigate();
 
 const { logout } = useAuth();
 
+const { theme, setTheme } = useTheme();
 
 const handleChangePassword = async () => {
   if (!currentPassword || !newPassword || !confirmPassword) {
@@ -99,195 +100,210 @@ const handleDeleteAccount = async () => {
   }
 
 };
+const handleSaveTheme = () => {
+  toast.success("Theme updated successfully");
+  setActiveDrawer(null);
+};
+return (
+  <>
+    {/* Background Overlay */}
+    <div
+      className={`fixed inset-0 bg-black/40 transition-opacity duration-300 ${
+        activeDrawer ? "opacity-100 visible" : "opacity-0 invisible"
+      }`}
+      onClick={() => setActiveDrawer(null)}
+    ></div>
 
-
-
-  return (
-    <>
-      {/* Background Overlay */}
-      <div
-        className={`fixed inset-0 bg-black/40 transition-opacity duration-300 ${
-          activeDrawer ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
-        onClick={() => setActiveDrawer(null)}
-      ></div>
-
-      {/* Drawer */}
-      <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[420px] bg-white shadow-2xl transition-transform duration-300 z-50 ${
-          activeDrawer ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        {/* Header */}
-        <div className="flex items-center gap-4 border-b p-5">
-
-          <button
-          type="button"
-            onClick={() => setActiveDrawer(null)}
-            className="text-2xl hover:text-indigo-600"
-          >
-            ←
-          </button>
-
-          <h2 className="text-xl font-semibold">
-            Settings
-          </h2>
-
-        </div>
-
-        {/* Content */}
-
-        <div className="p-6">
-
-             {activeDrawer === "password" && (
-  <div className="space-y-5">
-
-    <div>
-      <h3 className="text-2xl font-bold">
-        Change Password
-      </h3>
-
-      <p className="text-gray-500 mt-1">
-        Update your password to keep your account secure.
-      </p>
-    </div>
-
-    <input
-      type="password"
-      placeholder="Current Password"
-      value={currentPassword}
-      onChange={(e) => setCurrentPassword(e.target.value)}
-      className="w-full border rounded-xl p-3"
-    />
-
-    <input
-      type="password"
-      placeholder="New Password"
-      value={newPassword}
-      onChange={(e) => setNewPassword(e.target.value)}
-      className="w-full border rounded-xl p-3"
-    />
-
-    <input
-      type="password"
-      placeholder="Confirm Password"
-      value={confirmPassword}
-      onChange={(e) => setConfirmPassword(e.target.value)}
-      className="w-full border rounded-xl p-3"
-    />
-
-    <button
-    type="button"
-  onClick={handleChangePassword}
-  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-3 transition"
->
-  Save Password
-</button>
-
-  </div>
-)}
-
-
-          {activeDrawer === "delete" && (
-
-<div className="space-y-5">
-
-  <div>
-
-    <h3 className="text-2xl font-bold text-red-600">
-      Delete Account
-    </h3>
-
-    <p className="text-gray-500 mt-2">
-      This action is permanent.
-      All your products, favorites and profile
-      information will be removed.
-    </p>
-
-  </div>
-
- <input
-  type="password"
-  placeholder="Enter your password"
-  value={deletePassword}
-  onChange={(e) => setDeletePassword(e.target.value)}
-  className="w-full border rounded-xl p-3"
-/>
-
-  <button
-    type="button"
-    onClick={handleDeleteAccount}
-    className="w-full bg-red-600 hover:bg-red-700 text-white rounded-xl py-3 transition"
-  >
-    Delete Account
-  </button>
-
-</div>
-
-)}
-{activeDrawer === "theme" && (
-  <div className="space-y-5">
-
-    <div>
-      <h3 className="text-2xl font-bold">
-        Theme
-      </h3>
-
-      <p className="text-gray-500">
-        Choose how MiniCart looks.
-      </p>
-    </div>
-
-    <label className="flex items-center gap-3 cursor-pointer">
-      <input
-        type="radio"
-        name="theme"
-        value="light"
-        checked={theme === "light"}
-        onChange={(e) => setTheme(e.target.value)}
-      />
-
-      <div>
-        <p className="font-medium">Light</p>
-        <p className="text-sm text-gray-500">
-          Bright background
-        </p>
-      </div>
-    </label>
-
-    <label className="flex items-center gap-3 cursor-pointer">
-      <input
-        type="radio"
-        name="theme"
-        value="dark"
-        checked={theme === "dark"}
-        onChange={(e) => setTheme(e.target.value)}
-      />
-
-      <div>
-        <p className="font-medium">Dark</p>
-        <p className="text-sm text-gray-500">
-          Dark background
-        </p>
-      </div>
-    </label>
-
-    <button
-      type="button"
-      className="w-full bg-indigo-600 text-white rounded-xl py-3"
+    {/* Drawer */}
+    <div
+      className={`fixed top-0 right-0 h-full w-full sm:w-[420px] bg-white dark:bg-gray-800 shadow-2xl transition-all duration-300 z-50 ${
+        activeDrawer ? "translate-x-0" : "translate-x-full"
+      }`}
     >
-      Save Theme
-    </button>
+      {/* Header */}
+      <div className="flex items-center gap-4 border-b dark:border-gray-700 p-5">
 
-  </div>
-)}
-  
+        <button
+          type="button"
+          onClick={() => setActiveDrawer(null)}
+          className="text-2xl dark:text-white hover:text-indigo-600"
+        >
+          ←
+        </button>
 
-        </div>
+        <h2 className="text-xl font-semibold dark:text-white">
+          Settings
+        </h2>
 
       </div>
-    </>
-  );
-}
 
+      {/* Content */}
+      <div className="p-6">
+
+        {/* Change Password */}
+        {activeDrawer === "password" && (
+          <div className="space-y-5">
+
+            <div>
+              <h3 className="text-2xl font-bold dark:text-white">
+                Change Password
+              </h3>
+
+              <p className="text-gray-500 dark:text-gray-400 mt-1">
+                Update your password to keep your account secure.
+              </p>
+            </div>
+
+            <input
+              type="password"
+              placeholder="Current Password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              className="w-full border rounded-xl p-3 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            />
+
+            <input
+              type="password"
+              placeholder="New Password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="w-full border rounded-xl p-3 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            />
+
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full border rounded-xl p-3 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            />
+
+            <button
+              type="button"
+              onClick={handleChangePassword}
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-3 transition"
+            >
+              Save Password
+            </button>
+
+          </div>
+        )}
+
+        {/* Delete Account */}
+        {activeDrawer === "delete" && (
+          <div className="space-y-5">
+
+            <div>
+
+              <h3 className="text-2xl font-bold text-red-600 dark:text-red-400">
+                Delete Account
+              </h3>
+
+              <p className="text-gray-500 dark:text-gray-400 mt-2">
+                This action is permanent.
+                All your products, favorites and profile
+                information will be removed.
+              </p>
+
+            </div>
+
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={deletePassword}
+              onChange={(e) => setDeletePassword(e.target.value)}
+              className="w-full border rounded-xl p-3 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            />
+
+            <button
+              type="button"
+              onClick={handleDeleteAccount}
+              className="w-full bg-red-600 hover:bg-red-700 text-white rounded-xl py-3 transition"
+            >
+              Delete Account
+            </button>
+
+          </div>
+        )}
+
+        {/* Theme */}
+        {activeDrawer === "theme" && (
+          <div className="space-y-5">
+
+            <div>
+
+              <h3 className="text-2xl font-bold dark:text-white">
+                Theme
+              </h3>
+
+              <p className="text-gray-500 dark:text-gray-400">
+                Choose how MiniCart looks.
+              </p>
+
+            </div>
+
+            <label className="flex items-center gap-3 cursor-pointer border rounded-xl p-4 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700">
+
+              <input
+                type="radio"
+                name="theme"
+                value="light"
+                checked={theme === "light"}
+                onChange={(e) => setTheme(e.target.value)}
+              />
+
+              <div>
+
+                <p className="font-medium dark:text-white">
+                  Light
+                </p>
+
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Bright background
+                </p>
+
+              </div>
+
+            </label>
+
+            <label className="flex items-center gap-3 cursor-pointer border rounded-xl p-4 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700">
+
+              <input
+                type="radio"
+                name="theme"
+                value="dark"
+                checked={theme === "dark"}
+                onChange={(e) => setTheme(e.target.value)}
+              />
+
+              <div>
+
+                <p className="font-medium dark:text-white">
+                  Dark
+                </p>
+
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Dark background
+                </p>
+
+              </div>
+
+            </label>
+
+            <button
+              type="button"
+              onClick={handleSaveTheme}
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-3 transition"
+            >
+              Save Theme
+            </button>
+
+          </div>
+        )}
+
+      </div>
+    </div>
+  </>
+);
+}
 export default SettingsDrawer;

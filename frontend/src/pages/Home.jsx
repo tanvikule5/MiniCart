@@ -50,7 +50,7 @@ function Home() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 text-gray-900 transition-colors duration-300 dark:bg-gray-900 dark:text-white">
       <Navbar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -63,16 +63,16 @@ function Home() {
 
         <div className="flex flex-wrap gap-3 mb-10">
           {/* All Button */}
-          <button
-            onClick={() => setSelectedCategory("")}
-            className={`px-5 py-2 rounded-full transition ${
-              selectedCategory === ""
-                ? "bg-indigo-600 text-white"
-                : "bg-white border"
-            }`}
-          >
-            All
-          </button>
+         <button
+  onClick={() => setSelectedCategory("")}
+  className={`px-5 py-2 rounded-full transition ${
+    selectedCategory === ""
+      ? "bg-indigo-600 text-white"
+      : "bg-white border dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+  }`}
+>
+  All
+</button>
 
           {/* Categories */}
           {[...categories]
@@ -82,20 +82,18 @@ function Home() {
     return a.name.localeCompare(b.name);
   })
   .map((category) => (
-            <button
-              key={category.id}
-              onClick={() =>
-                setSelectedCategory(category.name)
-              }
-              className={`px-5 py-2 rounded-full transition ${
-                selectedCategory === category.name
-                  ? "bg-indigo-600 text-white"
-                  : "bg-white border"
-              }`}
-            >
-              {category.name}
-            </button>
-          ))}
+    <button
+      key={category.id}
+      onClick={() => setSelectedCategory(category.name)}
+      className={`px-5 py-2 rounded-full transition ${
+        selectedCategory === category.name
+          ? "bg-indigo-600 text-white"
+          : "bg-white border dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+      }`}
+    >
+      {category.name}
+    </button>
+  ))}
         </div>
 
         <h2 className="text-2xl font-bold mb-6">
@@ -108,7 +106,7 @@ function Home() {
               No products found.
             </h3>
 
-            <p className="text-gray-500">
+            <p className="text-gray-500 dark:text-gray-400">
               Try another search or category.
             </p>
           </div>

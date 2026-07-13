@@ -176,16 +176,16 @@ toast.success("Profile updated successfully!");
 
   return (
 
-    <div className="min-h-screen bg-slate-100 flex justify-center items-center p-6">
+    <div className="min-h-screen bg-slate-100 dark:bg-gray-900 flex justify-center items-center p-6 transition-colors duration-300">
 
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-xl p-8 w-full max-w-xl space-y-5"
+        className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8 w-full max-w-xl space-y-5 transition-colors duration-300"
       >
 
 
-        <h1 className="text-3xl font-bold text-center text-indigo-700">
+        <h1 className="text-3xl font-bold text-center text-indigo-700 dark:text-indigo-400">
           My Profile
         </h1>
 
@@ -229,8 +229,7 @@ preview && (
 <button
 type="button"
 onClick={handleRemoveImage}
-className="text-red-500 text-sm"
->
+className="text-red-500 dark:text-red-400 text-sm">
 Remove photo
 </button>
 )
@@ -242,7 +241,7 @@ Remove photo
 
 
         <div>
-          <label className="font-semibold">
+          <label className="font-semibold dark:text-white">
             Name
           </label>
 
@@ -251,7 +250,7 @@ Remove photo
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full border rounded-lg p-3 mt-1"
+            className="w-full border rounded-lg p-3 mt-1 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
 
         </div>
@@ -261,7 +260,7 @@ Remove photo
 
         <div>
 
-          <label className="font-semibold">
+          <label className="font-semibold dark:text-white">
             Email
           </label>
 
@@ -270,7 +269,7 @@ Remove photo
             type="email"
             value={formData.email}
             readOnly
-            className="w-full border rounded-lg p-3 mt-1 bg-gray-100"
+            className="w-full border rounded-lg p-3 mt-1 bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
           />
 
         </div>
@@ -281,7 +280,7 @@ Remove photo
 
         <div>
 
-          <label className="font-semibold">
+          <label className="font-semibold dark:text-white">
             Phone Number
           </label>
 
@@ -291,7 +290,7 @@ Remove photo
             name="phoneNumber"
             value={formData.phoneNumber}
             onChange={handleChange}
-            className="w-full border rounded-lg p-3 mt-1"
+           className="w-full border rounded-lg p-3 mt-1 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
 
         </div>
@@ -302,7 +301,7 @@ Remove photo
 
         <div>
 
-          <label className="font-semibold">
+          <label className="font-semibold dark:text-white">
             College Name
           </label>
 
@@ -312,7 +311,7 @@ Remove photo
             name="collegeName"
             value={formData.collegeName}
             onChange={handleChange}
-            className="w-full border rounded-lg p-3 mt-1"
+            className="w-full border rounded-lg p-3 mt-1 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
 
         </div>
@@ -323,7 +322,7 @@ Remove photo
 
         <div>
 
-          <label className="font-semibold">
+          <label className="font-semibold dark:text-white">
             Department
           </label>
 
@@ -333,7 +332,7 @@ Remove photo
             name="department"
             value={formData.department}
             onChange={handleChange}
-            className="w-full border rounded-lg p-3 mt-1"
+            className="w-full border rounded-lg p-3 mt-1 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
 
         </div>
@@ -344,7 +343,7 @@ Remove photo
 
         <div>
 
-          <label className="font-semibold">
+          <label className="font-semibold dark:text-white">
             Year
           </label>
 
@@ -354,7 +353,7 @@ Remove photo
             name="year"
             value={formData.year}
             onChange={handleChange}
-            className="w-full border rounded-lg p-3 mt-1"
+            className="w-full border rounded-lg p-3 mt-1 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
 
         </div>

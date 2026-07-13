@@ -45,16 +45,18 @@ function MyListings() {
   }
 };
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
       <Navbar />
 
       <div className="p-6">
-        <h1 className="text-3xl font-bold mb-6">
+        <h1 className="text-3xl font-bold mb-6 dark:text-white">
           My Listings
         </h1>
 
         {products.length === 0 ? (
-          <p>You haven't added any products yet.</p>
+          <p className="text-gray-600 dark:text-gray-400">
+  You haven't added any products yet.
+</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((product) => (
