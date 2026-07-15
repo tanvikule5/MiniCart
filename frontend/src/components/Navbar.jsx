@@ -1,4 +1,4 @@
-import { useContext,useState } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -25,10 +25,29 @@ function Navbar({
 
   const navigate = useNavigate();
 const [isProfileOpen, setIsProfileOpen] = useState(false);
+const profileRef = useRef(null);
+
     const handleLogout = () => {
     logout();
     navigate("/login");
   };
+useEffect(() => {
+  function handleClickOutside(event) {
+    if (
+      profileRef.current &&
+      !profileRef.current.contains(event.target)
+    ) {
+      setIsProfileOpen(false);
+    }
+  }
+
+  document.addEventListener("mousedown", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
 
 return (
   <nav className="sticky top-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
@@ -95,7 +114,10 @@ return (
   <FiHeart size={20} />
 </Link>
 
-<div className="relative">
+<div
+  ref={profileRef}
+  className="relative"
+>
   <button
     onClick={() => setIsProfileOpen(!isProfileOpen)}
     className="p-2.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition"
